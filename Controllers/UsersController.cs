@@ -12,11 +12,9 @@ namespace api.Controllers;
 [Route("api/[controller]")]
 public class UsersController : ControllerBase
 {
-    private readonly AppDbContext _context;
     private readonly IUserRepository _user_repository;
-    public UsersController(AppDbContext context, IUserRepository userRepository)
+    public UsersController(IUserRepository userRepository)
     {
-        _context = context;
         _user_repository = userRepository;
     }
 
@@ -67,7 +65,6 @@ public class UsersController : ControllerBase
 
         if (user == null)
         {
-
             return NotFound();
         }
 

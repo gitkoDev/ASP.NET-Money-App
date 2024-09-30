@@ -12,11 +12,9 @@ namespace api.Controllers;
 [Route("api/[controller]")]
 public class TransactionsController : ControllerBase
 {
-    private readonly AppDbContext _context;
     private readonly IUserTransactionRepository _repository;
-    public TransactionsController(AppDbContext context, IUserTransactionRepository repository)
+    public TransactionsController(IUserTransactionRepository repository)
     {
-        _context = context;
         _repository = repository;
     }
 
