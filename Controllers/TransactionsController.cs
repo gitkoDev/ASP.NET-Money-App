@@ -2,6 +2,7 @@ using System.Transactions;
 using api.Data;
 using api.Dtos;
 using api.Interfaces;
+using api.Mappers;
 using api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,11 +19,31 @@ public class TransactionsController : ControllerBase
         _repository = repository;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Add(AddUserTransactionDto addTransactionDto)
+    [HttpGet]
+    public async Task<IActionResult> GetAll(int pageNumber = 1, int pageSize = 10)
     {
-        var receiver = await _repository.GetReceiverById(addTransactionDto.Receiver);
-        var sender = await _repository.GetSenderById(addTransactionDto.Sender);
+        var transactions = await _repository.GetAllAsync(pageNumber, pageSize);
+        var userTransactionDto = transactions.Select(s => s.ToUserTransactionDto());
+        return Ok(userTransactionDto);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById([FromRoute] int id)
+    {
+        var transaction = await _repository.GetByIdAsync(id);
+        if (transaction == null) 
+        {
+            return NotFound();
+        }
+        var userTransactionDto = new UserTransactionDto(){SenderId = transaction.SenderId, ReceiverId = transaction.ReceiverId, Amount = transaction.Amount};
+        return Ok(userTransactionDto);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Add(UserTransactionDto addTransactionDto)
+    {
+        var receiver = await _repository.GetReceiverByIdAsync(addTransactionDto.ReceiverId);
+        var sender = await _repository.GetSenderByIdAsync(addTransactionDto.SenderId);
         if (receiver is null || sender is null)
         {
             return BadRequest("Transaction sender and receiver have to be valid users");

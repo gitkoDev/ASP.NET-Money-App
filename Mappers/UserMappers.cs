@@ -1,16 +1,18 @@
 using api.Dtos;
 using api.Models;
 
-namespace api.Mappers;
-
-public static class UserMapper
+namespace api.Mappers
 {
-    public static User ToUserDto(this AddUserDto addUserDto)
+    public static class UserMapper
     {
-        return new(){
-            Name = addUserDto.Name,
-            Email = addUserDto.Email,
-            Salary = addUserDto.Salary
-        };
+        public static User ToUserDto(this AddUserDto addUserDto)
+        {
+            return new(){
+                Name = addUserDto.Name,
+                Email = addUserDto.Email,
+                Salary = addUserDto.Salary
+            };
+        }
     }
 }
+

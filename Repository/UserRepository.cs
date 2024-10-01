@@ -14,9 +14,10 @@ namespace api.Repository
         {
             _context = context;
         }
-        public async Task<List<User>> GetAllAsync()
+        public async Task<List<User>> GetAllAsync(int pageNumber, int pageSize)
         {
-            return await _context.Users.ToListAsync();
+            var users = _context.Users.AsQueryable();
+            return await users.Skip(pageNumber - 1).Take(pageSize).ToListAsync();
         }
         public async Task<User?> GetByIdAsync(int id)
         {

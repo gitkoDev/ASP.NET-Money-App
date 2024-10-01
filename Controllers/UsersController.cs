@@ -19,10 +19,10 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] int pageNumber = 1, int pageSize = 10)
     {
-        var stocks = await _user_repository.GetAllAsync(); 
-        return Ok(stocks);
+        var users = await _user_repository.GetAllAsync(pageNumber, pageSize);
+        return Ok(users);
     }
 
     [HttpGet("{id}")]

@@ -4,8 +4,10 @@ namespace api.Interfaces
 {
     public interface IUserTransactionRepository 
     {
+        Task <List<UserTransaction>> GetAllAsync(int pageNumber, int pageSize);
         Task<UserTransaction> AddAsync(UserTransaction userTransaction);
-        Task<User?> GetSenderById(int id);
-        Task<User?> GetReceiverById(int id);
+        Task<UserTransaction?> GetByIdAsync(int id);
+        Task<User?> GetSenderByIdAsync(int id);
+        Task<User?> GetReceiverByIdAsync(int id);
     }
 }

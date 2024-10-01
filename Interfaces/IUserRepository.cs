@@ -6,7 +6,7 @@ namespace api.Interfaces
 {
     public interface IUserRepository
     {
-        Task<List<User>> GetAllAsync();
+        Task<List<User>> GetAllAsync(int pageNumber, int pageSize);
         Task<User?> GetByIdAsync(int id);
         Task<User> AddAsync(User userModel);
         Task<User?> UpdateAsync(int id, AddUserDto addUserDto);
