@@ -25,6 +25,14 @@ services:
       timeout: 30s
       retries: 5
       start_period: 0s
-
+  proxy:
+    image: nginx:latest
+    container_name: asp_nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - api
 volumes:
   pgdata:
